@@ -44,4 +44,6 @@ defmodule Pagebuilder.Blocks do
     |> Block.changeset(params)
     |> Repo.update()
   end
+
+  def list_blocktypes, do: Block.blocktypes()
 end

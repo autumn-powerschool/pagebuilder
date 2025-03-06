@@ -17,7 +17,7 @@ defmodule Pagebuilder.Block do
     field :order, :integer
     timestamps()
     belongs_to(:parent, Pagebuilder.Block)
-    has_many(:children, Pagebuilder.Block, foreign_key: :parent_id)
+    has_many(:children, Pagebuilder.Block, foreign_key: :parent_id, on_replace: :delete)
   end
 
   def changeset(block \\ %__MODULE__{}, attrs, position \\ nil) do
@@ -41,4 +41,6 @@ defmodule Pagebuilder.Block do
   def maybe_set_order(changeset, position) do
     change(changeset, order: position)
   end
+
+  def blocktypes, do: @blocktypes
 end

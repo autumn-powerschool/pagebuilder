@@ -13,6 +13,7 @@ defmodule PagebuilderWeb.PageEditLive do
     {:ok,
      socket
      |> assign(:page, page)
+     |> assign(:blocktypes, Pagebuilder.Blocks.list_blocktypes())
      |> assign_form(page_changeset)}
   end
 
@@ -36,9 +37,10 @@ defmodule PagebuilderWeb.PageEditLive do
           <div class="flex space-x-2 drag-item">
             <.icon name="hero-bars-3" data-handle />
             <input name="block[children_order][]" type="hidden" value={child.index} />
+            <.input type="select" field={child[:type]} options={@blocktypes} />
             <.input field={child[:content]} />
             <label>
-              <.input
+              <input
                 type="checkbox"
                 name="block[children_delete][]"
                 value={child.index}
@@ -67,17 +69,14 @@ defmodule PagebuilderWeb.PageEditLive do
 
     case Pagebuilder.Blocks.update_block(page, block_params) do
       {:ok, _} ->
-        socket =
-          socket
-          |> put_flash(:info, "Block updated successfully")
-
-        {:noreply, socket}
+        {:noreply,
+         socket
+         |> push_navigate(to: ~p"/#{page}")
+         |> put_flash(:info, "Block updated successfully")}
 
       {:error, changeset} ->
         {:noreply, assign(socket, :form, changeset)}
     end
-
-    {:noreply, socket}
   end
 
   def handle_event("validate", %{"block" => block_params}, socket) do
