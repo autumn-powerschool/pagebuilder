@@ -16,8 +16,9 @@ defmodule PagebuilderWeb.Router do
 
   scope "/", PagebuilderWeb do
     pipe_through :browser
-
     live "/", PageLive, :home
+    live "/:block_id", PageLive, :show
+    live "/:block_id/edit", PageEditLive, :edit
   end
 
   # Other scopes may use custom stacks.

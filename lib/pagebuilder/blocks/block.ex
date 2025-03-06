@@ -20,10 +20,25 @@ defmodule Pagebuilder.Block do
     has_many(:children, Pagebuilder.Block, foreign_key: :parent_id)
   end
 
-  def changeset(block \\ %__MODULE__{}, attrs) do
+  def changeset(block \\ %__MODULE__{}, attrs, position \\ nil) do
     block
     |> cast(attrs, [:type, :content, :parent_id, :order])
     |> validate_required([:type, :content])
     |> validate_inclusion(:type, @blocktypes)
+    |> maybe_set_order(position)
+    |> cast_assoc(:children,
+      with: &changeset/3,
+      sort_param: :children_order,
+      drop_param: :children_delete
+    )
+  end
+
+  # position will only come when we're dealing with the
+  # cast_assoc call in the changeset function above
+  # and is driven by the sort_param: :children_order
+  def maybe_set_order(changeset, nil), do: changeset
+
+  def maybe_set_order(changeset, position) do
+    change(changeset, order: position)
   end
 end

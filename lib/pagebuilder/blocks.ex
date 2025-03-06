@@ -34,4 +34,14 @@ defmodule Pagebuilder.Blocks do
     query
     |> preload(children: ^{children_order_query, [:children]})
   end
+
+  def change_block(block, params \\ %{}) do
+    Block.changeset(block, params)
+  end
+
+  def update_block(block, params) do
+    block
+    |> Block.changeset(params)
+    |> Repo.update()
+  end
 end
