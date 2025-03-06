@@ -8,10 +8,6 @@ defmodule Pagebuilder.Blocks do
   alias Pagebuilder.Block
   alias Pagebuilder.Repo
 
-  def list_blocks do
-    Repo.all(Block)
-  end
-
   def get_block!(id, opts \\ []) do
     from(b in Block,
       where: b.id == ^id,
@@ -33,8 +29,9 @@ defmodule Pagebuilder.Blocks do
 
   defp with_children(query, true) do
     children_order_query = from(c in Block, order_by: [c.order, c.inserted_at])
-
+    # posts_query = from p in Post, where: p.state == :published
+    # Repo.all from a in Author, preload: [posts: ^{posts_query, [:comments]}]
     query
-    |> preload(children: ^children_order_query)
+    |> preload(children: ^{children_order_query, [:children]})
   end
 end

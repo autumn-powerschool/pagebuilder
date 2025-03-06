@@ -17,7 +17,7 @@ defmodule PagebuilderWeb.Router do
   scope "/", PagebuilderWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", PageLive, :home
   end
 
   # Other scopes may use custom stacks.

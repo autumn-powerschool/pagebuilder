@@ -5,7 +5,7 @@ defmodule Pagebuilder.Block do
   use TypedEctoSchema
   import Ecto.Changeset
 
-  @blocktypes [:richtext, :image, :headline]
+  @blocktypes [:page, :richtext, :image, :headline]
 
   @type id :: Ecto.UUID.t()
   @primary_key {:id, :binary_id, autogenerate: true}
