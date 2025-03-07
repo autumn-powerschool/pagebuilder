@@ -15,6 +15,8 @@ defmodule Pagebuilder.MenuItem do
     field :title, :string
     field :slug, :string
     field :order, :integer
+    # this will be set automatically by the menuitems_update_path trigger
+    # see: `Pagebuilder.Repo.Migrations.AddMenuitems`
     field :path, Ltree
 
     field :depth, :integer, virtual: true
@@ -30,7 +32,7 @@ defmodule Pagebuilder.MenuItem do
 
   def changeset(menuitem \\ %__MODULE__{}, attrs, position \\ nil) do
     menuitem
-    |> cast(attrs, [:title, :slug, :order, :path, :parent_id, :page_id])
+    |> cast(attrs, [:title, :slug, :order, :parent_id, :page_id])
     |> maybe_set_order(position)
     |> cast_assoc(:children,
       with: &changeset/3,
