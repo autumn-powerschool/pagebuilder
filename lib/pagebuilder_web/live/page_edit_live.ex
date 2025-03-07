@@ -2,9 +2,7 @@ defmodule PagebuilderWeb.PageEditLive do
   @moduledoc """
   asdasd
   """
-  alias PagebuilderWeb.CoreComponents
   use PagebuilderWeb, :live_view
-  alias PagebuilderWeb.Components.BlockComponent
 
   def mount(%{"block_id" => block_id}, _session, socket) do
     page = Pagebuilder.Blocks.get_block!(block_id, with_children?: true)

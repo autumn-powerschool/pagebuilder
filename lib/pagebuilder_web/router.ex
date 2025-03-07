@@ -16,6 +16,9 @@ defmodule PagebuilderWeb.Router do
 
   scope "/", PagebuilderWeb do
     pipe_through :browser
+    live "/menu", MenuLive, :index
+
+    # putting stuff below this is probably a bad idea since it's greedy
     live "/", PageLive, :home
     live "/:block_id", PageLive, :show
     live "/:block_id/edit", PageEditLive, :edit

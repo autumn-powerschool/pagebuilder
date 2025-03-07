@@ -59,7 +59,8 @@ defmodule Pagebuilder.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       {:typed_ecto_schema, "~> 0.0"},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:ecto_ltree, "~> 0.3.0"}
     ]
   end
 

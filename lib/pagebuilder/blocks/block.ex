@@ -13,6 +13,8 @@ defmodule Pagebuilder.Block do
 
   typed_schema "blocks" do
     field :type, Ecto.Enum, values: @blocktypes
+    # this is not the final form of how to put content into a block
+    # it's probably a map with a bunch of type-specific data. I just wanted _something_
     field :content, :string
     field :order, :integer
     timestamps()
